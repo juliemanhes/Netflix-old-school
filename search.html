@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="style/css/style.css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  <meta charset="utf-8">
+  <title>Recherche</title>
+</head>
+<body>
+  <header class="header">
+    <ul>
+      <li><a href="index.html"><img src="img-content/logo.svg" alt=""></a></li>
+      <li class="parcourir"><a href="#">parcourir</a></li>
+      <li><a href="#">à propos</a></li>
+      <li><a href="#">Rechercher</a></li>
+    </ul>
+  </header>
+
+  <div class="menu-hover">
+    <ul>
+      <li class="annee80"><a href="film.html">Années 1980</a></li>
+      <li class="annee70"><a href="film.html">Années 1970</a></li>
+      <li class="annee60"><a href="film.html">Années 1960</a></li>
+    </ul>
+    <div class="decennie80">
+      <ul>
+        <li><a href="film.html">Shining</a></li>
+        <li><a href="film.html">Gremlins</a></li>
+        <li><a href="film.html">La Boum</a></li>
+        <li><a href="film.html">Le Grand bleu</a></li>
+      </ul>
+    </div>
+    <div class="decennie70">
+      <ul>
+        <li><a href="film.html">Le Parrain</a></li>
+        <li><a href="film.html">Alien</a></li>
+        <li><a href="film.html">Star Wars Épisode IV</a></li>
+        <li><a href="film.html">Apocalypse Now</a></li>
+      </ul>
+    </div>
+    <div class="decennie60">
+      <ul>
+        <li><a href="film.html">Psychose</a></li>
+        <li><a href="film.html">Les Tontons flingueurs</a></li>
+        <li><a href="film.html">Docteur Folamour</a></li>
+        <li><a href="film.html">Lawrence d'Arabie</a></li>
+      </ul>
+    </div>
+  </div>
+  <main>
+    <section class="search">
+      <form class="" action="index.html" method="post">
+        <input type="text" name="" value="">
+        <button type="button" name="button">RECHERCHER</button>
+      </form>
+      <img src="http://www.downgraf.com/wp-content/uploads/2014/09/01-progress.gif.pagespeed.ce.DETazxsDgB.gif" alt="" width="80%" style="margin: 0 auto;" class="loading">
+      <div class="app">
+
+      </div>
+    </section>
+  </main>
+  <footer>
+    <section>
+
+      <div class="footcont">
+        <h4>contact</h4>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+
+      </div>
+      <div class="footcont">
+        <h4>plan du site</h4>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+
+      </div>
+      <div class="footcont">
+        <h4>à propos</h4>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor</p>
+        <img src="img-layout/sponso.jpg" alt="">
+
+      </div>
+      <div class="footcont">
+        <h4>mentions légales</h4>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      </div>
+    </section>
+  </footer>
+</body>
+<script src="js/script.js"></script>
+<script src="js/carousel.js"></script>
+<script type="text/javascript">
+
+var input = document.querySelector('input');
+var app = document.querySelector('.app');
+  var btn = document.querySelector('button');
+  var loading = document.querySelector('.loading');
+
+  btn.addEventListener('click', function() {
+    loading.classList.add('visible');
+    fetch("https://www.googleapis.com/youtube/v3/search?key=AIzaSyD_KlYoGke1F-I158rNUURKQT8Eq-dSRt8&part=snippet&type=video&q=" + input.value.trim().split(' ').join('+'))
+    .then(function(response) {
+      return response.json();
+    }).
+    then(function(data) {
+      // app.innerHTML = '<img src="' + data.Search[0].Poster + '" />';
+      loading.classList.remove('visible');
+      render(data.items);
+      // console.log(data.items);
+    });
+  });
+
+
+  function render(array)
+  {
+    app.innerHTML = '';
+    for (let i = 0; i < array.length; i++) {
+      let div = document.createElement('div');
+      div.innerHTML = "<p>" + array[i].snippet.title + "</p>" +
+      '<iframe width="100%" height="315" src="https://www.youtube.com/embed/' + array[i].id.videoId + '" ></iframe>';
+      app.appendChild(div);
+    }
+  }
+</script>
+</html>
